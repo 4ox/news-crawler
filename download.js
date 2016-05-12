@@ -14,22 +14,24 @@ var urls = [
 ];
 
 //down
-var down = { 
+var download = { 
     path : [ __dirname, "download", date.format("Y/m/d/") ].join("/"),
-    start : function() {
+    req : function() {
         //mkdir
-        fsPath.mkdir(down.path, function(err){
+        fsPath.mkdir(download.path, function(err){
             if(err) throw err;
             //file request and save
             var fileName = "";
             for( idx in urls ) {
                 fileName = date.format("His") + "_" + urls[idx].name + ".html";
                 //requset and save file
-                request( urls[idx].path ).pipe(fs.createWriteStream( down.path + fileName, {flags: 'w'} ));
+                console.log( "Request : " + urls[idx].path );
+                console.log( "> Save  : " + download.path + fileName );
+                request( urls[idx].path ).pipe(fs.createWriteStream( download.path + fileName, {flags: 'w'} ))
             }
         });
     }
 }
 
-down.start();
+download.req();
 
